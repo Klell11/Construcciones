@@ -1,11 +1,31 @@
+// backend/server.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+// Importa tus otras rutas:
+const carreterasRoutes = require('./routes/carreteras');
+const constructorasRoutes = require('./routes/constructoras');
+const presupuestosRoutes = require('./routes/presupuestos');
+
+// Importa la nueva ruta de proyectos
+const proyectosRoutes = require('./routes/proyectos');
+
 const app = express();
+
+// Middlewares
 app.use(cors());
 app.use(express.json());
+
+// Rutas
+app.use('/api/carreteras', carreterasRoutes);
+app.use('/api/constructoras', constructorasRoutes);
+app.use('/api/presupuestos', presupuestosRoutes);
+
+// Nueva ruta para Proyectos
+app.use('/api/proyectos', proyectosRoutes);
+
 
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MONGODB_URI; // Verifica que esta variable no sea undefined
