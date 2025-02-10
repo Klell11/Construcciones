@@ -39,7 +39,7 @@ const URI = process.env.MONGO_URI;
 
 
 if (!URI) {
-  console.error("❌ MONGODB_URI no está definido. Revisa tu archivo .env");
+  console.error("❌ MONGO_URI no está definido. Revisa tu archivo .env y las variables de entorno en Render.");
   process.exit(1);
 }
 
