@@ -16,7 +16,7 @@ function EditarCarretera() {
   useEffect(() => {
     const getCarreteraById = async () => {
       try {
-        const res = await api.get(`/api/carreteras/${id}`);
+        const res = await api.get(`/carreteras/${id}`); // Se corrigió la ruta
         if (res.data) {
           setFormData({
             nombre: res.data.nombre,
@@ -26,7 +26,7 @@ function EditarCarretera() {
           });
         }
       } catch (error) {
-        console.error('Error al cargar la carretera:', error);
+        console.error('❌ Error al cargar la carretera:', error.response?.data || error.message);
       }
     };
     getCarreteraById();
@@ -42,12 +42,12 @@ function EditarCarretera() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/api/carreteras/${id}`, formData);
-      alert('Carretera actualizada exitosamente');
+      await api.put(`/carreteras/${id}`, formData); // Se corrigió la ruta
+      alert('✅ Carretera actualizada exitosamente');
       navigate('/carreteras');
     } catch (error) {
-      console.error('Error al actualizar la carretera:', error);
-      alert('Error al actualizar la carretera.');
+      console.error('❌ Error al actualizar la carretera:', error.response?.data || error.message);
+      alert(`Error al actualizar la carretera: ${error.response?.data?.message || "Intenta nuevamente"}`);
     }
   };
 

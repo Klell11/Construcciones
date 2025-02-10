@@ -7,11 +7,11 @@ function ListaCarretera() {
 
   const getCarreteras = async () => {
     try {
-      const res = await api.get('/api/carreteras');
+      const res = await api.get('/carreteras'); // Se corrigió la ruta
       setCarreteras(res.data);
     } catch (error) {
-      console.error('Error al obtener carreteras:', error);
-      alert('Error al obtener carreteras');
+      console.error('❌ Error al obtener carreteras:', error.response?.data || error.message);
+      alert(`Error al obtener carreteras: ${error.response?.data?.message || "Intenta nuevamente"}`);
     }
   };
 
@@ -22,12 +22,12 @@ function ListaCarretera() {
   const eliminarCarretera = async (id) => {
     if (!window.confirm('¿Estás seguro de eliminar esta carretera?')) return;
     try {
-      await api.delete(`/api/carreteras/${id}`);
-      alert('Carretera eliminada');
+      await api.delete(`/carreteras/${id}`); // Se corrigió la ruta
+      alert('✅ Carretera eliminada correctamente');
       getCarreteras();
     } catch (error) {
-      console.error('Error al eliminar carretera:', error);
-      alert('Error al eliminar');
+      console.error('❌ Error al eliminar carretera:', error.response?.data || error.message);
+      alert(`Error al eliminar carretera: ${error.response?.data?.message || "Intenta nuevamente"}`);
     }
   };
 
@@ -64,7 +64,7 @@ function ListaCarretera() {
                 <td>{carretera.ubicacion}</td>
                 <td>{carretera.longitud}</td>
                 <td>
-                  <Link to={`/editar/${carretera._id}`} className="btn btn-sm btn-info mr-2">
+                  <Link to={`/editar/${carretera._id}`} className="btn btn-sm btn-info me-2">
                     Editar
                   </Link>
                   <button

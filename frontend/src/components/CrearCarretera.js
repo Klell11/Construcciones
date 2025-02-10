@@ -1,4 +1,3 @@
-// frontend/src/components/CrearCarretera.js
 import React, { useState } from 'react';
 import api from '../api'; // Importamos la configuración de API
 
@@ -20,8 +19,8 @@ function CrearCarretera() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/api/carreteras', formData); // Ahora usa la URL dinámica
-      alert('Carretera creada exitosamente');
+      await api.post('/carreteras', formData); // Se corrigió la ruta
+      alert('✅ Carretera creada exitosamente');
       setFormData({
         nombre: '',
         ubicacion: '',
@@ -29,8 +28,8 @@ function CrearCarretera() {
         fechaFin: '',
       });
     } catch (error) {
-      console.error(error);
-      alert('Error al crear carretera');
+      console.error("❌ Error al crear la carretera:", error.response?.data || error.message);
+      alert(`Error al crear carretera: ${error.response?.data?.message || "Intenta nuevamente"}`);
     }
   };
 
