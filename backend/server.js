@@ -35,7 +35,8 @@ if (process.env.NODE_ENV === 'production') {
 
 // Conexión a MongoDB
 const PORT = process.env.PORT || 4000;
-const URI = process.env.MONGODB_URI; // Verifica que esta variable no sea undefined
+const URI = process.env.MONGO_URI;
+
 
 if (!URI) {
   console.error("❌ MONGODB_URI no está definido. Revisa tu archivo .env");
