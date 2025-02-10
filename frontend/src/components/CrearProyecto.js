@@ -1,6 +1,5 @@
-// frontend/src/components/CrearProyecto.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Importar api.js
 import { useNavigate } from 'react-router-dom';
 
 function CrearProyecto() {
@@ -24,15 +23,15 @@ function CrearProyecto() {
     const cargarDatos = async () => {
       try {
         const [resCon, resCar, resPre] = await Promise.all([
-          axios.get('http://localhost:4000/api/constructoras'),
-          axios.get('http://localhost:4000/api/carreteras'),
-          axios.get('http://localhost:4000/api/presupuestos'),
+          api.get('/api/constructoras'),
+          api.get('/api/carreteras'),
+          api.get('/api/presupuestos'),
         ]);
         setConstructoras(resCon.data);
         setCarreteras(resCar.data);
         setPresupuestos(resPre.data);
       } catch (error) {
-        console.error(error);
+        console.error('Error al cargar listas de datos:', error);
       }
     };
     cargarDatos();
@@ -45,12 +44,12 @@ function CrearProyecto() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/proyectos', formData);
+      await api.post('/api/proyectos', formData);
       alert('Proyecto creado');
       navigate('/proyectos');
     } catch (error) {
-      console.error(error);
-      alert('Error al crear proyecto');
+      console.error('Error al crear el proyecto:', error);
+      alert('Error al crear el proyecto');
     }
   };
 

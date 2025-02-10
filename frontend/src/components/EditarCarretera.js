@@ -1,6 +1,5 @@
-// frontend/src/components/EditarCarretera.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api'; // Importar api.js
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditarCarretera() {
@@ -17,7 +16,7 @@ function EditarCarretera() {
   useEffect(() => {
     const getCarreteraById = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/carreteras/${id}`);
+        const res = await api.get(`/api/carreteras/${id}`);
         if (res.data) {
           setFormData({
             nombre: res.data.nombre,
@@ -27,7 +26,7 @@ function EditarCarretera() {
           });
         }
       } catch (error) {
-        console.error(error);
+        console.error('Error al cargar la carretera:', error);
       }
     };
     getCarreteraById();
@@ -43,12 +42,12 @@ function EditarCarretera() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:4000/api/carreteras/${id}`, formData);
-      alert('Carretera actualizada');
+      await api.put(`/api/carreteras/${id}`, formData);
+      alert('Carretera actualizada exitosamente');
       navigate('/carreteras');
     } catch (error) {
-      console.error(error);
-      alert('Error al actualizar');
+      console.error('Error al actualizar la carretera:', error);
+      alert('Error al actualizar la carretera.');
     }
   };
 

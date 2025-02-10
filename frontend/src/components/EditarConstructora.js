@@ -1,6 +1,5 @@
-// frontend/src/components/EditarConstructora.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Importar api.js
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditarConstructora() {
@@ -17,7 +16,7 @@ function EditarConstructora() {
   useEffect(() => {
     const getConstructora = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/constructoras/${id}`);
+        const res = await api.get(`/api/constructoras/${id}`);
         if (res.data) {
           setFormData({
             nombre: res.data.nombre || '',
@@ -27,7 +26,7 @@ function EditarConstructora() {
           });
         }
       } catch (error) {
-        console.error(error);
+        console.error('Error al cargar datos de la constructora:', error);
         alert('Error al cargar datos de la constructora');
       }
     };
@@ -44,11 +43,11 @@ function EditarConstructora() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:4000/api/constructoras/${id}`, formData);
-      alert('Constructora actualizada');
+      await api.put(`/api/constructoras/${id}`, formData);
+      alert('Constructora actualizada exitosamente');
       navigate('/constructoras');
     } catch (error) {
-      console.error(error);
+      console.error('Error al actualizar la constructora:', error);
       alert('Error al actualizar constructora');
     }
   };

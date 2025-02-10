@@ -1,6 +1,6 @@
 // frontend/src/components/CrearCarretera.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Importamos la configuración de API
 
 function CrearCarretera() {
   const [formData, setFormData] = useState({
@@ -20,9 +20,8 @@ function CrearCarretera() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/carreteras', formData);
+      await api.post('/api/carreteras', formData); // Ahora usa la URL dinámica
       alert('Carretera creada exitosamente');
-      // Reseteamos
       setFormData({
         nombre: '',
         ubicacion: '',

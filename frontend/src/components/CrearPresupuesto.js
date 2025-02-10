@@ -1,6 +1,5 @@
-// frontend/src/components/CrearPresupuesto.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Usamos api.js en lugar de axios
 
 function CrearPresupuesto() {
   const [formData, setFormData] = useState({
@@ -19,7 +18,7 @@ function CrearPresupuesto() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/presupuestos', formData);
+      await api.post('/api/presupuestos', formData); // Usa la URL dinámica
       alert('Presupuesto creado exitosamente');
       setFormData({
         monto: 0,

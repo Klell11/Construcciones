@@ -1,6 +1,5 @@
-// frontend/src/components/CrearConstructora.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Usamos api.js en lugar de axios
 
 function CrearConstructora() {
   const [formData, setFormData] = useState({
@@ -20,7 +19,7 @@ function CrearConstructora() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/constructoras', formData);
+      await api.post('/api/constructoras', formData); // Usa la URL dinámica
       alert('Constructora creada exitosamente');
       setFormData({
         nombre: '',

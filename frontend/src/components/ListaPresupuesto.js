@@ -1,17 +1,16 @@
-// frontend/src/components/ListaPresupuesto.js
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api'; // Importar api.js
 
 function ListaPresupuesto() {
   const [presupuestos, setPresupuestos] = useState([]);
 
   const getPresupuestos = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/api/presupuestos');
+      const res = await api.get('/api/presupuestos');
       setPresupuestos(res.data);
     } catch (error) {
-      console.error(error);
+      console.error('Error al obtener presupuestos:', error);
       alert('Error al obtener presupuestos');
     }
   };
@@ -23,11 +22,11 @@ function ListaPresupuesto() {
   const eliminarPresupuesto = async (id) => {
     if (!window.confirm('¿Deseas eliminar este presupuesto?')) return;
     try {
-      await axios.delete(`http://localhost:4000/api/presupuestos/${id}`);
+      await api.delete(`/api/presupuestos/${id}`);
       alert('Presupuesto eliminado');
       getPresupuestos();
     } catch (error) {
-      console.error(error);
+      console.error('Error al eliminar presupuesto:', error);
       alert('Error al eliminar presupuesto');
     }
   };
@@ -47,8 +46,8 @@ function ListaPresupuesto() {
           No hay presupuestos registrados.
         </div>
       ) : (
-        <table class="table" >
-          <thead class="table-dark">
+        <table className="table">
+          <thead className="table-dark">
             <tr>
               <th>Monto</th>
               <th>Origen de Fondos</th>

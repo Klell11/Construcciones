@@ -1,6 +1,5 @@
-// frontend/src/components/ListaProyectos.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Importar api.js
 import { Link } from 'react-router-dom';
 
 function ListaProyectos() {
@@ -8,10 +7,10 @@ function ListaProyectos() {
 
   const getProyectos = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/api/proyectos');
+      const res = await api.get('/api/proyectos');
       setProyectos(res.data);
     } catch (error) {
-      console.error(error);
+      console.error('Error al cargar proyectos:', error);
       alert('Error al cargar proyectos');
     }
   };
@@ -23,11 +22,11 @@ function ListaProyectos() {
   const eliminarProyecto = async (id) => {
     if (!window.confirm('¿Desea eliminar este proyecto?')) return;
     try {
-      await axios.delete(`http://localhost:4000/api/proyectos/${id}`);
+      await api.delete(`/api/proyectos/${id}`);
       alert('Proyecto eliminado');
       getProyectos();
     } catch (error) {
-      console.error(error);
+      console.error('Error al eliminar el proyecto:', error);
       alert('Error al eliminar');
     }
   };
@@ -45,8 +44,8 @@ function ListaProyectos() {
           No hay proyectos registrados
         </div>
       ) : (
-        <table class="table" >
-          <thead class="table-dark">
+        <table className="table">
+          <thead className="table-dark">
             <tr>
               <th>Nombre</th>
               <th>Contratista</th>
@@ -62,35 +61,17 @@ function ListaProyectos() {
               <tr key={p._id}>
                 <td>{p.nombre}</td>
                 <td>{p.contratista?.nombre || ''}</td>
-                <td>
-                  {p.presupuesto ? `$${p.presupuesto.monto}` : ''}
-                </td>
+                <td>{p.presupuesto ? `$${p.presupuesto.monto}` : ''}</td>
                 <td>{p.carretera?.nombre || ''}</td>
+                <td>{p.fechaInicio ? new Date(p.fechaInicio).toLocaleDateString() : ''}</td>
+                <td>{p.fechaFin ? new Date(p.fechaFin).toLocaleDateString() : ''}</td>
                 <td>
-                  {p.fechaInicio
-                    ? new Date(p.fechaInicio).toLocaleDateString()
-                    : ''}
-                </td>
-                <td>
-                  {p.fechaFin ? new Date(p.fechaFin).toLocaleDateString() : ''}
-                </td>
-                <td>
-
-                  <Link
-                    to={`/editar-proyecto/${p._id}`}
-                    className="btn btn-sm btn-info mr-2"
-                  >
+                  <Link to={`/editar-proyecto/${p._id}`} className="btn btn-sm btn-info mr-2">
                     Editar
                   </Link>
-                  <button
-                    onClick={() => eliminarProyecto(p._id)}
-                    className="btn btn-sm btn-danger"
-                  >
+                  <button onClick={() => eliminarProyecto(p._id)} className="btn btn-sm btn-danger">
                     Eliminar
                   </button>
-
-
-
                 </td>
               </tr>
             ))}

@@ -1,6 +1,5 @@
-// frontend/src/components/ListaConstructora.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Importar api.js
 import { Link } from 'react-router-dom';
 
 function ListaConstructora() {
@@ -8,10 +7,10 @@ function ListaConstructora() {
 
   const getConstructoras = async () => {
     try {
-      const res = await axios.get('http://localhost:4000/api/constructoras');
+      const res = await api.get('/api/constructoras');
       setConstructoras(res.data);
     } catch (error) {
-      console.error(error);
+      console.error('Error al cargar constructoras:', error);
       alert('Error al cargar constructoras');
     }
   };
@@ -23,11 +22,11 @@ function ListaConstructora() {
   const eliminarConstructora = async (id) => {
     if (!window.confirm('¿Desea eliminar esta constructora?')) return;
     try {
-      await axios.delete(`http://localhost:4000/api/constructoras/${id}`);
+      await api.delete(`/api/constructoras/${id}`);
       alert('Constructora eliminada');
       getConstructoras();
     } catch (error) {
-      console.error(error);
+      console.error('Error al eliminar la constructora:', error);
       alert('Error al eliminar');
     }
   };
@@ -47,8 +46,8 @@ function ListaConstructora() {
           No hay constructoras registradas
         </div>
       ) : (
-        <table class="table" >
-          <thead class="table-dark">
+        <table className="table">
+          <thead className="table-dark">
             <tr>
               <th>Nombre</th>
               <th>Dirección</th>
@@ -65,10 +64,7 @@ function ListaConstructora() {
                 <td>{item.telefono}</td>
                 <td>{item.representante}</td>
                 <td>
-                  <Link
-                    to={`/editar-constructora/${item._id}`}
-                    className="btn btn-sm btn-info mr-2"
-                  >
+                  <Link to={`/editar-constructora/${item._id}`} className="btn btn-sm btn-info mr-2">
                     Editar
                   </Link>
                   <button

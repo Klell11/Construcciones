@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Importar api.js
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditarProyecto() {
@@ -18,14 +18,13 @@ function EditarProyecto() {
     fechaFin: '',
   });
 
-  // Cargar listas de opciones
   useEffect(() => {
     const cargarDatos = async () => {
       try {
         const [resCon, resCar, resPre] = await Promise.all([
-          axios.get('http://localhost:4000/api/constructoras'),
-          axios.get('http://localhost:4000/api/carreteras'),
-          axios.get('http://localhost:4000/api/presupuestos'),
+          api.get('/api/constructoras'),
+          api.get('/api/carreteras'),
+          api.get('/api/presupuestos'),
         ]);
         setConstructoras(resCon.data);
         setCarreteras(resCar.data);
@@ -37,18 +36,17 @@ function EditarProyecto() {
     cargarDatos();
   }, []);
 
-  // Cargar datos del proyecto
   useEffect(() => {
     const getProyectoById = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/proyectos/${id}`);
+        const res = await api.get(`/api/proyectos/${id}`);
         setFormData({
           nombre: res.data.nombre,
           contratista: res.data.contratista?._id || '',
           presupuesto: res.data.presupuesto?._id || '',
           carretera: res.data.carretera?._id || '',
-          fechaInicio: res.data.fechaInicio ? res.data.fechaInicio.substring(0, 10) : '',
-          fechaFin: res.data.fechaFin ? res.data.fechaFin.substring(0, 10) : '',
+          fechaInicio: res.data.fechaInicio?.substring(0, 10) || '',
+          fechaFin: res.data.fechaFin?.substring(0, 10) || '',
         });
       } catch (error) {
         console.error('Error al cargar el proyecto:', error);
@@ -58,16 +56,13 @@ function EditarProyecto() {
   }, [id]);
 
   const onChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:4000/api/proyectos/${id}`, formData);
+      await api.put(`/api/proyectos/${id}`, formData);
       alert('Proyecto actualizado exitosamente');
       navigate('/proyectos');
     } catch (error) {

@@ -1,6 +1,5 @@
-// frontend/src/components/EditarPresupuesto.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api'; // Importar api.js
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditarPresupuesto() {
@@ -16,7 +15,7 @@ function EditarPresupuesto() {
   useEffect(() => {
     const getPresupuestoById = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/presupuestos/${id}`);
+        const res = await api.get(`/api/presupuestos/${id}`);
         if (res.data) {
           setFormData({
             monto: res.data.monto || 0,
@@ -25,7 +24,7 @@ function EditarPresupuesto() {
           });
         }
       } catch (error) {
-        console.error(error);
+        console.error('Error al cargar el presupuesto:', error);
         alert('Error al cargar el presupuesto');
       }
     };
@@ -42,12 +41,12 @@ function EditarPresupuesto() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:4000/api/presupuestos/${id}`, formData);
-      alert('Presupuesto actualizado');
+      await api.put(`/api/presupuestos/${id}`, formData);
+      alert('Presupuesto actualizado exitosamente');
       navigate('/presupuestos');
     } catch (error) {
-      console.error(error);
-      alert('Error al actualizar presupuesto');
+      console.error('Error al actualizar el presupuesto:', error);
+      alert('Error al actualizar el presupuesto');
     }
   };
 
