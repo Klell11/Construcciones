@@ -25,3 +25,7 @@ yarn-error.log*
 # Ignorar archivos sensibles
 .env
 node_modules/
+node_modules
+node_modules
+node_modules
+node_modules
