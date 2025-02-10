@@ -5,7 +5,6 @@
   "dependencies": {
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
-    "cra-template": "1.2.0",
     "datatables.net": "^2.2.1",
     "datatables.net-buttons": "^3.2.1",
     "datatables.net-buttons-bs5": "^3.2.1",
@@ -14,16 +13,16 @@
     "jquery": "^3.7.1",
     "jszip": "^3.10.1",
     "pdfmake": "^0.2.18",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^7.1.5",
     "react-scripts": "^5.0.1"
   },
   "scripts": {
-    "start": "npx react-scripts start",
-    "build": "npx react-scripts build",
-    "test": "npx react-scripts test",
-    "eject": "npx react-scripts eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
